@@ -2,18 +2,22 @@
 {{set_uvar_nx("Adventure","")}}
 {{set_uvar("Book","&2&") if "set" in "&*&" else ""}}
 {{set_uvar("Adventure","") if "begin" in "&*&" else ""}}
-{{Number="One" if "1" in "&*&" else "Two" if "2" in "&*&" else "Three" if "3" in "&*&" else ""}}
+{{Number="One" if "&*&" in "1" else "Two" if "&*&" in "2" else "Three" if "&*&" in "3" else ""}}
 {{x=get("Adventure")+Number}}
 {{set_uvar("Adventure",x) if "&*&".isdigit() else ""}}
+{{set_uvar("Adventure"," ".join(&ARGS&[1:])) if "move" in "&*&" else ""}}
 {{g=load_json(get_gvar("3eb5d53b-a660-4347-b9b8-7f88e7a67f00"))}}
 -title "{{Book if get("Book") else "Fallenarmada's Choose your Own Adventure Alias!"}}"
--desc "{{g[Book]["Begin"] if "begin" in "&*&" else g[Book][Adventure] if "&*&".isdigit() else "Your Book has been set to "+Book+"!" if "set" in "&*&" else "Set which book you are playing with `!choose set [book]`. (Quotes for book titles containing more than one word). Then simply type the response you wish as an argument to advance. Type `!choose begin` to begin!"}}"
-{{"" if "&*&".isdigit() or "begin" in "&*&" or "set" in "&*&" else f"-f 'Want to make your own book? Simply make your own gvar with the following format|`{get_gvar('eca36517-c1d1-4ea4-ad49-d4576fb249fa')}`'"}}
-{{"" if "&*&".isdigit() or "begin" in "&*&" else f'-f "List of Available Books|{"/n".join([x for x in g])}"'}}
+-desc "{{g[Book]["Begin"] if "begin" in "&*&" else "Your Book has been set to "+Book+"!" if "set" in "&*&" else g[Book][Adventure] if "&*&".isdigit() or get("Adventure") else "Set which book you are playing with `!choose set [book]`. (Quotes for book titles containing more than one word). Then simply type the response you wish as an argument to advance. Type `!choose begin` to begin!"}}"
+{{"" if "&*&".isdigit() or "begin" in "&*&" or "set" in "&*&" or get("Adventure") else f"-f 'Want to make your own book? Simply make your own gvar with the following format|`{get_gvar('eca36517-c1d1-4ea4-ad49-d4576fb249fa')}`'"}}
+{{"" if "&*&".isdigit() or "begin" in "&*&" or get("Adventure") else f'-f "List of Available Books|{"/n".join([x for x in g])}"'}}
 -footer '!choose set "The Ritual"
 To set this alias to the book: The Ritual
 !choose begin
 To begin or start over
 !choose 1 
 Is an example of choosing option 1
+!choose move OneOne
+Will move to a specific position
+Current Position: {{get("Adventure")}}
 Any questions? Ask Fallenarmada#4017!'
