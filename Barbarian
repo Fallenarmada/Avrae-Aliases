@@ -1,0 +1,5 @@
+barbarian: 
+!alias barbarian tembed
+{{args=&ARGS&}}
+{{f'''{'{'*2}y={args}{'}'*2}'''}}
+{{get_gvar("fb46049e-2ccc-434b-a8c6-5db2a644b230")}}
